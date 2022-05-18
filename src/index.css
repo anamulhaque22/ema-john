@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap');
+:root{
+  font-family: 'Lato', sans-serif;
+  --font-color-1:#ffffff;
+  --font-color-2:#1C2B35;
+  --font-color-3:#2A414F;
+  --header-bg:#1C2B35;
+  --fs-h1:3.75rem;
+  --fs-h2:2rem;
+  --fs-h3:1.5rem;
+  --fs-h4:1.3125rem;
+  --fs-h5:1.5625rem;
+  --fs-p:1.2rem;
+  --fs-ps:1.0625rem;
+  --fs-sm:0.75rem;
+}
+
+@media (max-width: 992px){
+  :root{
+    --fs-h1:2.75rem;
+    --fs-h2:1.5rem;
+    --fs-h3:.8rem;
+    --fs-h4:1rem;
+    --fs-h5:1rem;
+    --fs-p:1rem;
+    --fs-ps:1rem;
+  }
+}
+@media (max-width: 768px){
+  :root{
+    --fs-h1:1.75rem;
+    --fs-h2:1rem;
+    --fs-h3:.8rem;
+    --fs-h4:1rem;
+    --fs-h5:1rem;
+    --fs-p:1.2rem;
+    --fs-ps:1rem;
+  }
+}
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body{
+  font-weight: 400;
+}
+p{
+  font-size: var(--fs-p);
+}
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+h1{
+  font-size: var(--fs-h1);
+  color: var(--font-color-2);
+  font-weight: 700;
+}
+h2{
+  font-size: var(--fs-h2);  
+}
+h3{
+ font-size: var(--fs-h3); 
+}
+h4{
+  font-size: var(--fs-h4);
+}
+h5{
+  font-size: var(--fs-h5);
+}

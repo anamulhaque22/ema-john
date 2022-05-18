@@ -1,0 +1,46 @@
+.hero-area{
+    height: calc(100vh - 80px);
+}
+.hero-area .container, .hero-area .row{
+    height: 100%;
+}
+.hero-left p>span {
+    font-size: 1.0625rem;
+    color: #FF9900;
+}
+.hero-area .sale-up{
+    margin-bottom: 2rem;
+}
+.hero-left p{
+    font-size: var(--fs-p);
+}
+
+.btn{
+    font-size: 1.5625rem;
+    color: var(--font-color-2);
+    display: inline-block;
+    border-radius: 5px;
+    padding: 0.2rem 1rem;
+    background-color: #FF9900;
+}
+.hero-left .btn{
+    margin-top: 2rem;
+}
+.hero-right img{
+    max-width: 100%;
+    height: auto;
+}
+@media (max-width: 768px) { 
+    .hero-area{
+        padding-top: 20px;
+    }
+    .hero-area .sale-up {
+        margin-bottom: 1rem;
+    }
+    .hero-left .btn {
+        margin-top: 1rem;
+    }
+    .hero-left {
+        margin-bottom: 2rem;
+    }
+ }
