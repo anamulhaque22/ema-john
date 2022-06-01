@@ -1,14 +1,14 @@
 import React from 'react';
 import './Cart.css';
-import { FaRegTrashAlt, FaArrowRight } from "react-icons/fa";
-const Cart = ({ cart }) => {
+import { FaRegTrashAlt } from "react-icons/fa";
+const Cart = ({ cart,children,clearCart }) => {
     let total = 0;
     let shipping = 0;
     let quantity = 0;
     for (const product of cart) {
         quantity+=product.quantity;
-        total+=product.price * quantity;
-        shipping+=product.shipping * quantity;
+        total+=(product.price * product.quantity);
+        shipping+=(product.shipping * product.quantity);
     }
     let tax = parseFloat((total*0.1).toFixed(2));
     let grandTotal= total+shipping+tax;
@@ -21,8 +21,8 @@ const Cart = ({ cart }) => {
             <p>Tax: ${tax}</p>
             <h4>Grand Total: ${grandTotal}</h4>
             <div className="card-button-area">
-                <button className='cart-btn-b'>Clear Cart <FaRegTrashAlt></FaRegTrashAlt></button>
-                <button className='cart-btn-b another-color'>Review Order <FaArrowRight></FaArrowRight></button>
+                <button onClick={()=>clearCart()} className='cart-btn-b'>Clear Cart <FaRegTrashAlt></FaRegTrashAlt></button>
+                {children}
             </div>
         </div>
     );

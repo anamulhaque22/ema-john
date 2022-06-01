@@ -1,34 +1,26 @@
-import React, { useEffect, useState } from 'react';
 import { Container, Row } from 'react-bootstrap';
-import { addToLocalDb, getStoredProduct } from '../../utilities/addToLocalStorage';
+import useCart from '../../hooks/useCart';
+import useProducts from '../../hooks/useProducts';
+import { addToLocalDb, deleteLocalData } from '../../utilities/addToLocalStorage';
 import Cart from '../Cart/Cart';
 import Product from '../Product/Product';
 import "./Order.css";
-
+import { Link } from "react-router-dom";
+import { FaArrowRight } from "react-icons/fa";
 
 const Order = () => {
-    const [products, setProducts] = useState([]);
-    const [cart, setCart] = useState([]);
-
-    //get the data from database
-    useEffect(()=>{
-        fetch("products.json")
-        .then(response => response.json())
-        .then(data => {
-            setProducts(data);
-        });
-    }, []);
-
+    const [products, setProducts] = useProducts();
+    const [cart, setCart] = useCart(products);
     //product adding in the cart
-    const addToCart = (selectedProduct)=>{
+    const addToCart = (selectedProduct) => {
         let newCart = [];
         const exits = cart.find(product => product.id === selectedProduct.id);
-        if(!(exits)){
+        if (!(exits)) {
             selectedProduct.quantity = 1;
             newCart = [...cart, selectedProduct];
-        }else{
+        } else {
             const remainProduct = cart.filter(product => product.id !== selectedProduct.id);
-            exits.quantity+=1;
+            exits.quantity += 1;
             newCart = [...remainProduct, exits];
         }
         setCart(newCart);
@@ -36,20 +28,23 @@ const Order = () => {
     }
 
     //stored product data
-    useEffect(()=>{
-        const storedProduct= getStoredProduct();
-        const localStorProduct = []
-        for (const id in storedProduct) {
-            const addedProduct = products.find(product => product.id === id);
-            if(addedProduct){
-                addedProduct.quantity = storedProduct[id];
-                localStorProduct.push(addedProduct);
+    /*     useEffect(()=>{
+            const storedProduct= getStoredProduct();
+            const localStorProduct = [];
+            for (const id in storedProduct) {
+                const addedProduct = products.find(product => product.id === id);
+                if(addedProduct){
+                    addedProduct.quantity = storedProduct[id];
+                    localStorProduct.push(addedProduct);
+                }
             }
+            setCart(localStorProduct);
+        },[products])
+     */
+        const clearCart = ()=>{
+            setCart([]);
+            deleteLocalData();
         }
-        setCart(localStorProduct);
-    },[products])
-
-
     return (
         <div className='order-container d-flex'>
             <div className="product-container">
@@ -62,8 +57,10 @@ const Order = () => {
                 </Container>
             </div>
             <div className="cart-container">
-                <Cart cart={cart}></Cart>
-            </div>            
+                <Cart cart={cart} clearCart={clearCart}>
+                    <Link to='/order-review'><button className='cart-btn-b another-color'>Review Order <FaArrowRight></FaArrowRight></button></Link>
+                </Cart>
+            </div>
         </div>
     );
 };

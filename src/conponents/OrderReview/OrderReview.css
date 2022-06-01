@@ -1,0 +1,24 @@
+.review-container {
+    margin-top: 5%;
+}
+
+.cart-in-review {
+    background-color: rgba(255, 153, 0, 0.3);
+    margin-left: 12%;
+    padding: 40px;
+}
+
+.product-item-container {
+    height: 700px;
+    overflow-y: scroll;
+}
+@media (max-width: 992px){
+    .cart-in-review{
+        margin-left: 3%;
+    }
+}
+@media (max-width: 768px){
+    .cart-in-review {
+        margin-left: 0;
+    }
+}

@@ -47,4 +47,6 @@
 
 .another-color {
     background: #FF9900;
+    display: block;
+    width: 100%;
 }
