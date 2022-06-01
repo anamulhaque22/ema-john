@@ -1,47 +1,47 @@
 import React, { useState } from 'react';
 import { Col, Form, Row } from 'react-bootstrap';
-import './Login.css';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { Link, useNavigate } from 'react-router-dom';
+import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import './SignUp.css';
 import auth from '../../firebase.init';
-const Login = () => {
+const SignUp = () => {
     const [validated, setValidated] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [signInWithEmailAndPassword, user] = useSignInWithEmailAndPassword(auth);
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [error, setError] = useState();
+    const [createUserWithEmailAndPassword, user] = useCreateUserWithEmailAndPassword(auth);
     const nevigate = useNavigate();
-    
-    //redirect to a path where require path
-    let navigate = useNavigate();
-    let location = useLocation();
-  
-    let from = location.state?.from?.pathname || "/";
     if(user){
-        navigate(from, { replace: true });
+        nevigate('/login');
     }
-    const handleSubmit = (event) => {
+    const handleCreateUser = (event) => {
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
             event.preventDefault();
             event.stopPropagation();
         }
         setValidated(true);
-        signInWithEmailAndPassword(email, password);
-        
+
+        if(password !== confirmPassword){
+            setError("Password did not match")
+            return;
+        }
+        createUserWithEmailAndPassword(email, password);
         event.preventDefault();
     };
     return (
         <div className='login-form-container'>
             <div className="login-form-content">
-                <h4>Login</h4>
-                <Form noValidate validated={validated} onSubmit={handleSubmit}>
+                <h4>Sign Up</h4>
+                <Form noValidate validated={validated} onSubmit={handleCreateUser}>
                     <Row className="mb-3">
                         <Form.Group as={Col} md="12" controlId="validationCustom01">
                             <Form.Label>Email</Form.Label>
                             <Form.Control
                                 required
                                 type="email"
-                                onChange={(e)=> setEmail(e.target.value)}
+                                onChange={(e) => setEmail(e.target.value)}
                             />
                             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                         </Form.Group>
@@ -52,15 +52,27 @@ const Login = () => {
                             <Form.Control
                                 required
                                 type="password"
-                                onChange={(e)=> setPassword(e.target.value)}
+                                onChange={(e) => setPassword(e.target.value)}
                             />
                             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                         </Form.Group>
                     </Row>
-                    <button type="submit" className='btn-submit'>Login</button>
+                    <Row className="mb-3">
+                        <Form.Group as={Col} md="12" controlId="validationCustom02">
+                            <Form.Label>Confirm Password</Form.Label>
+                            <Form.Control
+                                required
+                                type="password"
+                                onChange={(e) => setConfirmPassword(e.target.value)}
+                            />
+                            <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                        </Form.Group>
+                    </Row>
+                    <p>{error}</p>
+                    <button type="submit" className='btn-submit'>Sign Up</button>
                 </Form>
                 <div className='bottom-info'>
-                    <span>New to Ema-john? {<Link to='/signup'>Create New Account</Link>}</span>
+                    <span>New to Ema-john? {<Link to='/login'> Login</Link>}</span>
                     <div className='or-container'>Or</div>
                     <button className='btn-submit bottom-btn'>Continue with Google</button>
                 </div>
@@ -69,4 +81,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default SignUp;
